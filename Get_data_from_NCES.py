@@ -40,7 +40,7 @@ def download_nces_data(year):
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Edge(options=chrome_options)
+    driver = webdriver.chrome(options=chrome_options)
 
     driver.get("https://nces.ed.gov/ccd/elsi/tableGenerator.aspx")
     time.sleep(10)  # Wait for page to load
