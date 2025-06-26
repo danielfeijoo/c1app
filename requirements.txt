@@ -1,0 +1,6 @@
+streamlit
+selenium
+pandas
+pydeck
+openpyxl
+pathlib
