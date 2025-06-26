@@ -1,9 +1,10 @@
+import chromedriver_autoinstaller
 from selenium import webdriver  
-from selenium.webdriver.edge.service import service  
+from selenium.webdriver.chrome.service import service  
 from selenium.webdriver.common.by import By  
 from selenium.webdriver.support.ui import WebDriverWait  
 from selenium.webdriver.support import expected_conditions as EC  
-from selenium.webdriver.edge.options import Options  
+from selenium.webdriver.chrome.options import Options  
 from pathlib import Path
 import pandas as pd  
 import streamlit as st
@@ -24,6 +25,7 @@ if 'base_dir' not in st.session_state:
 
 st.logo(str(st.session_state['logo_path']))
 
+
 def download_nces_data(year):
     # Set up Edge in headless mode
     prefs = {
@@ -31,13 +33,14 @@ def download_nces_data(year):
         "download.prompt_for_download": False,
         "download.directory_upgrade": True
     }
-    edge_options = Options()
-    edge_options.add_experimental_option("prefs",prefs)
-    edge_options.add_argument("--headless")
-    edge_options.add_argument("--disable-gpu")
-    edge_options.add_argument("--no-sandbox")
-    edge_options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Edge(options=edge_options)
+    chromedriver_autoinstaller.install()
+    chrome_options = Options()
+    chrome_options.add_experimental_option("prefs",prefs)
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Edge(options=chrome_options)
 
     driver.get("https://nces.ed.gov/ccd/elsi/tableGenerator.aspx")
     time.sleep(10)  # Wait for page to load
