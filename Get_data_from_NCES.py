@@ -40,7 +40,7 @@ def download_nces_data(year):
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.chrome(options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
 
     driver.get("https://nces.ed.gov/ccd/elsi/tableGenerator.aspx")
     time.sleep(10)  # Wait for page to load
@@ -156,7 +156,7 @@ def load_data():
     zipfiles = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.zip') and not f.endswith(".crdownload")]  
     newest_zip_file = max(zipfiles, key=os.path.getctime)
     df = pd.read_csv(newest_zip_file, skiprows=6)  
-    df.columns = ["District Agency Name", "State", "County", "County number","Source url","zip code", "phone", "District Type", " District Status", "Effective date of updated status", "Latitude", "Longitude", "Enrollment"]
+    df.columns = ["District Agency Name", "State", "County", "County number","Source url", "zip code", "phone", "District Type", " District Status", "Effective date of updated status", "Latitude", "Longitude", "Enrollment"]
     df['District Agency Name'] = df['District Agency Name'].str.lower()
     df["Enrollment"] = pd.to_numeric(df["Enrollment"], errors='coerce')
     df["State"] = df["State"].astype(str).str.title().str.strip()
