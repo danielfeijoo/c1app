@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
-st.logo("C:\\Users\\dfeijoo\\OneDrive - ConvergeOne\\Documents\\C1-logo-white.png")
+
+if 'loco_path' in st.session_state:
+    st.logo(str(st.session_state['logo_path']))
+
+st.logo(str(st.session_state['logo_path']))
 
 st.title("Analyze District Data")
 

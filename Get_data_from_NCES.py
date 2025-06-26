@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait  
 from selenium.webdriver.support import expected_conditions as EC  
 from selenium.webdriver.edge.options import Options  
+from pathlib import Path
 import pandas as pd  
 import streamlit as st
 import os  
@@ -15,11 +16,23 @@ import shutil
 import glob
 import zipfile
 
-st.logo("C:\\Users\\dfeijoo\\OneDrive - ConvergeOne\\Documents\\C1-logo-white.png")
+if 'base_dir' not in st.session_state:
+    st.session_state['base_dir'] = Path(__file__).resolve().parent
+    st.session_state['download_dir'] = st.session_state['base_dir'] / "downloads"
+    st.session_state['data_path'] = st.session_state['base_dir'] / "data" / "Account Assignments 9.9.24.xlsx"
+    st.session_state['logo_path'] = st.session_state['base_dir'] / "C1-logo-white.png"
+
+st.logo(str(st.session_state['logo_path']))
 
 def download_nces_data(year):
     # Set up Edge in headless mode
+    prefs = {
+        "download.default_directory": str(st.session_state['download_dir']),
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True
+    }
     edge_options = Options()
+    edge_options.add_experimental_option("prefs",prefs)
     edge_options.add_argument("--headless")
     edge_options.add_argument("--disable-gpu")
     edge_options.add_argument("--no-sandbox")
@@ -136,7 +149,7 @@ def download_nces_data(year):
     st.write("CSV file export initiated")
 
 def load_data():
-    folder_path = 'C://Users//dfeijoo//Downloads'  
+    folder_path = st.session_state['download_dir']
     zipfiles = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.zip') and not f.endswith(".crdownload")]  
     newest_zip_file = max(zipfiles, key=os.path.getctime)
     df = pd.read_csv(newest_zip_file, skiprows=6)  

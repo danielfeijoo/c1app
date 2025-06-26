@@ -1,7 +1,11 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
-st.logo("C:\\Users\\dfeijoo\\OneDrive - ConvergeOne\\Documents\\C1-logo-white.png")
+if 'loco_path' in st.session_state:
+    st.logo(str(st.session_state['logo_path']))
+
+st.logo(str(st.session_state['logo_path']))
 
 st.title("CRM Analysis")
 
@@ -17,7 +21,7 @@ st.header("CRM Data:")
 
 @st.cache_data
 def load_crm_data():
-    crm = pd.read_excel("C:\\Users\\dfeijoo\\OneDrive - ConvergeOne\\Desktop\\C1app\\data\\Account Assignments 9.9.24.xlsx")
+    crm = pd.read_excel(st.session_state['data_path'])
     crm['assigned']=True
     crm.columns = ['name', 'ID', 'phone', 'employee_id', 'owner', 'manager', 'sales_id', 'create_on', 'region', 'BU', 'territory', 'last_activity_date', 'last_activity_type', 'status', 'employees', 'industry', 'assigned']
     crm['name'] = crm['name'].str.lower()
