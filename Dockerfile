@@ -30,5 +30,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8501
 
 #Run the app
-CMD ["streamlit","run","Get_data_from_NCES.py"]
+ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+CMD ["streamlit","run","Get_data_from_NCES.py", "--server.port=8501", "--server.address=0.0.0.0"]
 
