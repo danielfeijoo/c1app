@@ -22,14 +22,27 @@ WORKDIR /app
 
 #Copy project files intp the container
 COPY . /app
-
+COPY .streamlit/  /app/.streamlit/
 #Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt 
+
+#streamlit config
+RUN mkdir -p /root/.streamlit && \ 
+    echo "\ 
+[server]\n\ 
+headless = true\n\ 
+port = 8501\n\ 
+enableCORS = false\n\ 
+enableXsrfProtection = false\n\ 
+address = \"0.0.0.0\"\n\ 
+\n\ 
+[browser]\n\ 
+gatherUsageStats = false\n\ 
+" > /root/.streamlit/config.toml 
 
 #Expose Streamlit defualt port
 EXPOSE 8501
 
 #Run the app
-ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
-CMD ["streamlit","run","Get_data_from_NCES.py", "--server.port=8501", "--server.address=0.0.0.0","--browser.gatherUsageStats=false"]
+CMD ["streamlit","run","Get_data_from_NCES.py"]
 
