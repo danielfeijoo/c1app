@@ -2,24 +2,17 @@
 FROM python:3.11-slim 
 
 #Set Enviroment Variables
-ENV PYTHONDONTWRITEBYTECODE=1  
-
-PYTHONUNBUFFERED=1 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 
 
 #Install system dependencies
-RUN apt-get update && apt-get install -y  
-
-wget  
-
-unzip  
-
-curl  
-
-chromium-driver  
-
-chromium  
-
-&& rm -rf /var/lib/apt/lists/* 
+RUN apt-get update && apt-get install -y  \
+    wget  \
+    unzip \ 
+    curl  \
+    chromium-driver  \
+    chromium  \
+    && rm -rf /var/lib/apt/lists/* 
 
 #Set display port for Streamlit 
 ENV DISPLAY=:99 
