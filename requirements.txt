@@ -3,5 +3,4 @@ selenium
 pandas
 pydeck
 openpyxl
-pathlib
 chromedriver-autoinstaller
