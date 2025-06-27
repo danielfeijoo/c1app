@@ -31,5 +31,5 @@ EXPOSE 8501
 
 #Run the app
 ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
-CMD ["streamlit","run","Get_data_from_NCES.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit","run","Get_data_from_NCES.py", "--server.port=8501", "--server.address=0.0.0.0","--browser.gatherUsageStats=false"]
 
